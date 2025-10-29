@@ -1,0 +1,128 @@
+{% load static %}
+{% block sidebar %}
+ <!-- Preloader -->
+<div id="preloader">
+    <i class="circle-preloader"></i>
+    <img src="{% static 'img/core-img/salad.png' %}" alt="">
+</div>
+ <!-- Search Wrapper -->
+<div class="search-wrapper">
+    <!-- Close Btn -->
+    <div class="close-btn"><i class="fa fa-times" aria-hidden="true"></i></div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <form action="#" method="post">
+                    <input type="search" name="search" id="global_search" placeholder="Type any receipies...">
+                    <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ##### Header Area Start ##### -->
+<header class="header-area">
+
+    
+
+    <!-- Navbar Area -->
+    <div class="delicious-main-menu">
+        <div class="classy-nav-container breakpoint-off">
+            <div class="container">
+                <!-- Menu -->
+                <nav class="classy-navbar justify-content-between" id="deliciousNav">
+
+                    <!-- Logo -->
+                    <a class="nav-brand" href="/"><img src="{% static 'img/core-img/logo.png' %}" alt=""></a>
+
+                    <!-- Navbar Toggler -->
+                    <div class="classy-navbar-toggler">
+                        <span class="navbarToggler"><span></span><span></span><span></span></span>
+                    </div>
+
+                    <!-- Menu -->
+                    <div class="classy-menu">
+
+                        <!-- close btn -->
+                        <div class="classycloseIcon">
+                            <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+                        </div>
+
+                        <!-- Nav Start -->
+                        <div class="classynav">
+                            <ul>
+                                <li class="active"><a href="/">Home</a></li>
+                                
+                                <li><a href="/recipe-all">Receipies</a></li>
+                                
+                            </ul>
+                            
+                            <!-- Newsletter Form -->
+                            <div class="search-btn">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </div>
+                            <a href="/cart/cart-detail/" style="padding-left:15px;"><img src="{% static 'img/cart.png' %}" width="30" height="25"></a>    
+                            {% if request.user.is_authenticated %}
+                            
+                                <div class="dropdown" style="padding-left:15px;">
+                                    <div class=" dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <img src="{% static 'img/login.jpeg' %}" width="25" height="25">
+                                    
+                                    </div>
+                                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <div class="ml-2">{{request.user}}</div>
+                                    <hr>
+                                    <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                                    
+                                  </div>
+                                </div>
+                            
+                            {% else %}
+                                <a href="login" style="padding-left:15px;"><img src="{% static 'img/login.jpeg' %}" width="25" height="25"></a>    
+                            {% endif %}
+
+                        </div>
+                        <!-- Nav End -->
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+<script>
+    $( function() {
+      
+   
+      $( "#global_search" ).autocomplete({
+        source: function( request, response ) {
+          $.ajax( {
+            url: "/recipe/search",
+            dataType: "json",
+            data: {
+              name: request.term
+            },
+            success: function( data ) {
+                
+              response( data.data );
+            }
+          } );
+        },
+        minLength: 2,
+        select: function( event, ui ) {
+            $("#search").val(ui.item.title)
+            window.location.href ="/recipe/"+ui.item.id
+            return false;
+        }
+      } )
+      .autocomplete( "instance" )._renderItem = function( ul, item ) {
+        console.log(item)
+        return $( "<li>" )
+          .append( "<div>" + item.title + "</div>" )
+          .appendTo( ul );
+      };
+      
+    } );
+    </script>
+{% endblock %}

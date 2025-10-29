@@ -1,0 +1,221 @@
+    {% extends 'base.html' %}
+    {% load static %}
+    <!-- ##### Header Area End ##### -->
+    {% block content %}
+    <!-- ##### Breadcumb Area Start ##### -->
+    <div class="breadcumb-area bg-img bg-overlay" style="background-image: url({{dish.image}});">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12">
+                    <div class="breadcumb-text text-center ">
+                        <h2>Recipe</h2>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ##### Breadcumb Area End ##### -->
+
+    <div class="receipe-post-area section-padding-80">
+
+        <!-- Receipe Post Search -->
+        {% comment %} <div class="receipe-post-search mb-80">
+            <div class="container">
+                <form action="#" method="post">
+                    <div class="row">
+                       
+                        <div class="col-12 col-lg-3">
+                            <input type="search" name="search" placeholder="Search Receipies">
+                        </div>
+                        <div class="col-12 col-lg-3 text-right">
+                            <button type="submit" class="btn delicious-btn">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div> {% endcomment %}
+
+        <!-- Receipe Slider -->
+        {% comment %} <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="receipe-slider owl-carousel">
+                        <img src="img/bg-img/bg5.jpg" alt="">
+                        <img src="img/bg-img/bg5.jpg" alt="">
+                        <img src="img/bg-img/bg5.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+        </div> {% endcomment %}
+
+        <!-- Receipe Content Area -->
+        <div class="receipe-content-area">
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-12 col-md-8">
+                        <div class="receipe-headline my-5">
+                            
+                            <h2>{{dish.title}}</h2>
+                            <p>
+                                {{dish.description}}
+                            </p>
+                            <div class="receipe-duration">
+                                <h6>Prep: {{dish.prep_time}}</h6>
+                                <h6>Cook: {{dish.cook_time}}</h6>
+                                <h6>Yields: {{dish.servings}} Servings</h6>
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    {% comment %} <div class="col-12 col-md-4">
+                        <div class="receipe-ratings text-right my-5">
+                            <div class="ratings">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                            </div>
+                            <a href="#" class="btn delicious-btn">For Begginers</a>
+                        </div>
+                    </div> {% endcomment %}
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-lg-8">
+                        <!-- Single Preparation Step -->
+                        <div class="single-preparation-step">
+                            <h4>Instructions</h4>
+                            
+                            {% comment %} {% with dish.intructions|split:"\n" as intructions %} {% endcomment %}
+                                {% comment %} {% for key,instruction in dish.intructions|split:"\n" %}
+                                    <h4>{{key}}</h4>
+                                    <p>{{instruction}}</p>
+                                    {% empty %}
+                                        <p>No instruction </p>
+                                    
+                                {% endfor %} {% endcomment %}
+                                <br>{{dish.intructions|linebreaks}}</br>
+                                
+                            {% comment %} {% endwith %}     {% endcomment %}
+                        </div>
+
+
+                        <!-- Single Preparation Step -->
+                        <div class="row">
+                            <div class="col-12 col-lg-8">
+                                <!-- Single Preparation Step -->
+                                <div class="single-preparation-step">
+                                    <h4>Nutritional Facts</h4>
+                                    
+                                
+                                        <br>{{dish.nutritional_facts | safe }}</br>
+                                        
+                                    {% comment %} {% endwith %}     {% endcomment %}
+                                </div>  
+                            </div>
+                        </div>  
+                    </div>
+                    
+            
+                    <!-- Ingredients -->
+                    <div class="col-12 col-lg-4">
+                        <div class="ingredients">
+                            <h4>Ingredients</h4>
+
+
+                            <form action="/cart/multiadd/" method="POST" >
+                                {% csrf_token %}
+                            <!-- Custom Checkbox -->
+                            {% for ingredient in ingredients_detail %}
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck{{forloop.counter}}" value={{ingredient.id}} name="ingredient[]">
+                                    <label class="custom-control-label" for="customCheck{{forloop.counter}}">{{ingredient.name}}</label>
+                                    
+                                </div>
+
+                            {% endfor %}
+                             <input type="submit" class="btn delicious-btn" onclick= "return validateCheckboxes()" value="Add to Cart" />
+                            <div id="error"></div> 
+                            
+                                <div>
+                            </form>
+
+                                   
+                            
+                             {% comment %} <!-- Custom Checkbox -->
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                <label class="custom-control-label" for="customCheck2">2 large eggs</label>
+                            </div>
+
+                            <!-- Custom Checkbox -->
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="customCheck3">
+                                <label class="custom-control-label" for="customCheck3">2 yogurt containers granulated sugar</label>
+                            </div>
+
+                            <!-- Custom Checkbox -->
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="customCheck4">
+                                <label class="custom-control-label" for="customCheck4">1 vanilla or plain yogurt, 170g container</label>
+                            </div>
+
+                            <!-- Custom Checkbox -->
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="customCheck5">
+                                <label class="custom-control-label" for="customCheck5">2 yogurt containers unbleached white flour</label>
+                            </div>
+
+                            <!-- Custom Checkbox -->
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="customCheck6">
+                                <label class="custom-control-label" for="customCheck6">1.5 yogurt containers milk</label>
+                            </div>
+
+                            <!-- Custom Checkbox -->
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="customCheck7">
+                                <label class="custom-control-label" for="customCheck7">1/4 tsp cinnamon</label>
+                            </div>
+
+                            <!-- Custom Checkbox -->
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="customCheck8">
+                                <label class="custom-control-label" for="customCheck8">1 cup fresh blueberries </label>
+                            </div> {% endcomment %}
+                        </div>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+    </div>
+<script>
+    function validateCheckboxes() {
+        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        var checked = false;
+    
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                checked = true;
+                break;
+            }
+        }
+    
+        if (checked) {
+            document.getElementById('error').innerText = '';
+            return true
+            // Proceed with form submission or other actions
+        } else { 
+            document.getElementById('error').innerText = 'Please select at least one option.';
+            return false
+        }
+    }
+</script>    
+    
+    {% endblock %}

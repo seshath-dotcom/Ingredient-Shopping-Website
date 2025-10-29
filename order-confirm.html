@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<section class="h-100 h-custom" style="background-color: #eee;">
+		
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col">
+          <div class="card">
+            <div class="card-body p-4">
+  
+              <div class="row">
+                <div class="col-lg-12">
+                <div class="text-center" > <i class="fa fa-check fa-5x" aria-hidden="true" style="
+                    border: 5px solid green;
+                    border-radius: 50px;
+                    color: green;
+                   
+                "></i></div>
+                    <h5 class="text-center pt-3"> Your order is confirmed.</h5>
+                    <h5 class="mb-3 text-center"><a href="{% url 'home' %}" class="text-body">
+                        <iclass="fas fa-long-arrow-alt-left me-2"></i>Continue shopping</a></h5>
+                    </div>
+                </div>
+              </div>
+            </div>
+        </div>
+       </div>
+    </div>
+
+{% endblock%}
